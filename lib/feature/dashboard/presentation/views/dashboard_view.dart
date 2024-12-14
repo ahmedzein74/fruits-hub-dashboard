@@ -8,7 +8,7 @@ class DashboardView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: DashboardViewBody(),
+      body: SafeArea(child: DashboardViewBody()),
     );
   }
 }
