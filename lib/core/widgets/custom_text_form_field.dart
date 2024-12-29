@@ -35,10 +35,9 @@ class CustomTextFormField extends StatelessWidget {
               EdgeInsets.symmetric(horizontal: 20.w, vertical: 17.h),
           hintText: hintText,
           hintStyle: TextStyles.bold13.copyWith(
-            color: const Color(0xff949e9d),
+            color: Colors.grey,
           ),
-          filled: true,
-          fillColor: const Color(0xfff9fafa),
+
           border: buildBorder(),
           enabledBorder: buildBorder(),
           focusedBorder: buildBorder(),
@@ -50,10 +49,9 @@ class CustomTextFormField extends StatelessWidget {
 
   OutlineInputBorder buildBorder() {
     return OutlineInputBorder(
-      borderRadius: BorderRadius.circular(4.r),
+      borderRadius: BorderRadius.circular(16),
       borderSide: const BorderSide(
-        color: Color(0xFFe6e9e9),
-        width: 2,
+        color: Colors.grey,
       ),
     );
   }

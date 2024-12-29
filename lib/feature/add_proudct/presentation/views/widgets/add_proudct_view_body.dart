@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:fruits_hub_dashboard/core/widgets/custom_text_form_field.dart';
 import 'package:fruits_hub_dashboard/feature/add_proudct/presentation/views/widgets/image_field.dart';
+import 'package:fruits_hub_dashboard/feature/add_proudct/presentation/views/widgets/is_featured_check_box.dart';
 
 class AddProudctViewBody extends StatefulWidget {
   const AddProudctViewBody({super.key});
@@ -20,38 +23,49 @@ class _AddProudctViewBodyState extends State<AddProudctViewBody> {
         child: Form(
           autovalidateMode: autovalidateMode,
           key: formKey,
-          child: const Column(
+          child: Column(
             children: [
-              CustomTextFormField(
+              const CustomTextFormField(
                 hintText: 'product name',
                 textInputType: TextInputType.text,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 16,
               ),
-              CustomTextFormField(
+              const CustomTextFormField(
                 hintText: 'product price',
                 textInputType: TextInputType.number,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 16,
               ),
-              CustomTextFormField(
-                hintText: 'produt code',
+              const CustomTextFormField(
+                hintText: 'product code',
                 textInputType: TextInputType.number,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 16,
               ),
-              CustomTextFormField(
+              const CustomTextFormField(
                 hintText: 'product description',
                 textInputType: TextInputType.text,
                 maxLines: 5,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 16,
               ),
-              ImageField(),
+              IsFeaturedCheckBox(
+                onChanged: (value) {},
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              ImageField(
+                onFileChanged: (image) {},
+              ),
+              const SizedBox(
+                height: 16,
+              ),
             ],
           ),
         ),
