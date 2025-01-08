@@ -8,6 +8,7 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (context) => const DashboardView());
     case AddProductView.routeName:
       return MaterialPageRoute(builder: (context) => const AddProductView());
+
     default:
       return MaterialPageRoute(builder: (context) => const Scaffold());
   }

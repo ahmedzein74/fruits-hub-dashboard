@@ -8,14 +8,13 @@ class CustomTextFormField extends StatelessWidget {
       required this.hintText,
       required this.textInputType,
       this.suffixIcon,
-      this.validator,
       this.onSaved,
       this.isPassword = false,
       this.maxLines = 1});
   final String hintText;
   final TextInputType textInputType;
   final Widget? suffixIcon;
-  final String? Function(String?)? validator;
+
   final void Function(String?)? onSaved;
   final bool isPassword;
   final int? maxLines;
@@ -26,7 +25,7 @@ class CustomTextFormField extends StatelessWidget {
         maxLines: maxLines,
         obscureText: isPassword,
         onSaved: onSaved,
-        validator: validator,
+        validator: (value) => value!.isEmpty ? 'this field is required' : null,
         keyboardType: textInputType,
         decoration: InputDecoration(
           isDense: true,
@@ -37,10 +36,11 @@ class CustomTextFormField extends StatelessWidget {
           hintStyle: TextStyles.bold13.copyWith(
             color: Colors.grey,
           ),
-
+          errorStyle: const TextStyle(fontSize: 18),
           border: buildBorder(),
           enabledBorder: buildBorder(),
           focusedBorder: buildBorder(),
+
           // focusedErrorBorder: buildErrorBorder(),
         ),
       ),
