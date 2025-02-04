@@ -4,7 +4,7 @@ import 'package:fruits_hub_dashboard/core/repos/proudct_repo/proudct_repo.dart';
 import 'package:fruits_hub_dashboard/core/services/database_services.dart';
 import 'package:fruits_hub_dashboard/core/utils/backend_endpoints.dart';
 import 'package:fruits_hub_dashboard/feature/add_proudct/data/models/add_proudct_input_model.dart';
-import 'package:fruits_hub_dashboard/feature/add_proudct/domain/entities/add_proudct_entity.dart';
+import 'package:fruits_hub_dashboard/feature/add_proudct/domain/entities/add_proudct_input_entity.dart';
 
 class ProudctRepoImpl implements ProudctRepo {
   final DatabaseServices databaseServices;

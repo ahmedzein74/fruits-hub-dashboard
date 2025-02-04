@@ -6,11 +6,29 @@ import 'package:path/path.dart' as p;
 
 class SubabaseStorageServices implements StorageServices {
   static late Supabase _supabase;
+
+  static createBukets(String buketName) async {
+    var buckets = await _supabase.client.storage.listBuckets();
+
+    bool isBucketExist = false;
+
+    for (var bucket in buckets) {
+      if (bucket.id == buketName) {
+        isBucketExist = true;
+        break;
+      }
+    }
+
+    if (!isBucketExist) {
+      await _supabase.client.storage.createBucket(buketName);
+    }
+  }
+
   static initSupabase() async {
     _supabase = await Supabase.initialize(
       url: 'https://iczixyquckgaxupnohgd.supabase.co',
       anonKey:
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imljeml4eXF1Y2tnYXh1cG5vaGdkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzYzNTAwMjYsImV4cCI6MjA1MTkyNjAyNn0.UQ8d98x9ILzq-Rkrh3pMRtAVZ7PJ9RgGjB-bWLoS3Fc',
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imljeml4eXF1Y2tnYXh1cG5vaGdkIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTczNjM1MDAyNiwiZXhwIjoyMDUxOTI2MDI2fQ.krTpWqxnR-QT4UfUCkgpAjA8NF7eR-g3ZSFdDimDRSM',
     );
   }
 
@@ -21,6 +39,10 @@ class SubabaseStorageServices implements StorageServices {
     var response = await _supabase.client.storage
         .from('furits_images')
         .upload('$path/$fileName.$extensionName', file);
+
+    final String publicUrl = _supabase.client.storage
+        .from('furits_images')
+        .getPublicUrl('$path/$fileName.$extensionName');
 
     return response;
   }

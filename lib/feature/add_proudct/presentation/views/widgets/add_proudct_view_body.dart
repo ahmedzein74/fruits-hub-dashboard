@@ -1,11 +1,15 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fruits_hub_dashboard/core/widgets/custom_button.dart';
 import 'package:fruits_hub_dashboard/core/widgets/custom_text_form_field.dart';
-import 'package:fruits_hub_dashboard/feature/add_proudct/domain/entities/add_proudct_entity.dart';
+import 'package:fruits_hub_dashboard/feature/add_proudct/domain/entities/add_proudct_input_entity.dart';
+import 'package:fruits_hub_dashboard/feature/add_proudct/presentation/controller/cubit/add_proudct_cubit.dart';
 import 'package:fruits_hub_dashboard/feature/add_proudct/presentation/views/widgets/image_field.dart';
 import 'package:fruits_hub_dashboard/feature/add_proudct/presentation/views/widgets/is_featured_check_box.dart';
+
+import 'is_organc_check_box.dart';
 
 class AddProudctViewBody extends StatefulWidget {
   const AddProudctViewBody({super.key});
@@ -19,9 +23,11 @@ class _AddProudctViewBodyState extends State<AddProudctViewBody> {
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
 
   late String name, code, description;
-  late double price;
+  late double price, expirationMonths, numberOfcalories, unitAmount;
   bool isFeatured = false;
+  bool isOrganic = false;
   File? image;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -47,6 +53,36 @@ class _AddProudctViewBodyState extends State<AddProudctViewBody> {
                   price = double.parse(value!);
                 },
                 hintText: 'product price',
+                textInputType: TextInputType.number,
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              CustomTextFormField(
+                onSaved: (value) {
+                  expirationMonths = double.parse(value!);
+                },
+                hintText: 'product expiration months',
+                textInputType: TextInputType.number,
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              CustomTextFormField(
+                onSaved: (value) {
+                  numberOfcalories = double.parse(value!);
+                },
+                hintText: 'number of calories',
+                textInputType: TextInputType.number,
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              CustomTextFormField(
+                onSaved: (value) {
+                  unitAmount = double.parse(value!);
+                },
+                hintText: 'Unit Amount',
                 textInputType: TextInputType.number,
               ),
               const SizedBox(
@@ -81,6 +117,12 @@ class _AddProudctViewBodyState extends State<AddProudctViewBody> {
               const SizedBox(
                 height: 16,
               ),
+              IsOrgancCheckBox(onChanged: (value) {
+                isOrganic = value;
+              }),
+              const SizedBox(
+                height: 16,
+              ),
               ImageField(
                 onFileChanged: (image) {
                   this.image = image;
@@ -96,13 +138,19 @@ class _AddProudctViewBodyState extends State<AddProudctViewBody> {
                         formKey.currentState!.save();
 
                         AddProudctEntity input = AddProudctEntity(
-                          name: name,
-                          code: code,
-                          price: price,
-                          description: description,
-                          image: image!,
-                          isFeatured: isFeatured,
-                        );
+                            reviews: [],
+                            name: name,
+                            code: code,
+                            price: price,
+                            description: description,
+                            image: image!,
+                            isFeatured: isFeatured,
+                            isOrganic: isOrganic,
+                            expirationMonths: expirationMonths,
+                            numberOfcalories: numberOfcalories,
+                            unitAmount: unitAmount);
+
+                        context.read<AddProudctCubit>().addProduct(input);
                       } else {
                         setState(() {
                           autovalidateMode = AutovalidateMode.always;
